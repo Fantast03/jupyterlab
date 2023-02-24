@@ -7,12 +7,13 @@ on:
   workflow_dispatch:
 
 env:
-  BASE_IMAGE_URI: "$IMAGE_REPO_URL/fantast03/jupyterlab"
   IMAGE_REPO_URL: "docker.io"
 
 
 jobs:
   base-build:
+    env:
+      FULL_IMAGE_URI: "$IMAGE_REPO_URL/${{ secrets.DOCKER_LOGIN }}/jupyterlab-base"
 
     runs-on: ubuntu-latest
 
@@ -25,18 +26,18 @@ jobs:
 
     - name: "Build and push image into the repo"
       run: |
-       IMAGE_TAG_NAME=base
        COMMIT_SHA=$(git rev-parse --short HEAD)
-       FULL_IMAGE_NAME="$BASE_IMAGE_URI-$IMAGE_TAG_NAME"
        
-       docker build . --file Dockerfile --no-cache -t $FULL_IMAGE_NAME:latest --target base
-       docker push $FULL_IMAGE_NAME:latest
+       docker build . --file Dockerfile --no-cache -t $FULL_IMAGE_URI:latest --target base
+       docker push $FULL_IMAGE_URI:latest
 
-       docker tag $FULL_IMAGE_NAME:latest $FULL_IMAGE_NAME:$COMMIT_SHA
-       docker push $FULL_IMAGE_NAME:$COMMIT_SHA
+       docker tag $FULL_IMAGE_URI:latest $FULL_IMAGE_URI:$COMMIT_SHA
+       docker push $FULL_IMAGE_URI:$COMMIT_SHA
   
   machine-learning-build: 
     name: "Build machine learning notebook docker image"
+    env:
+      FULL_IMAGE_URI: "$IMAGE_REPO_URL/${{ secrets.DOCKER_LOGIN }}/jupyterlab-machine-learning"
     runs-on: "ubuntu-latest"
     steps:
     - name: "Check out the repo"
@@ -47,12 +48,10 @@ jobs:
 
     - name: "Build and push image into the repo"
       run: |
-       IMAGE_TAG_NAME=machine-learning
        COMMIT_SHA=$(git rev-parse --short HEAD)
-       FULL_IMAGE_NAME="$BASE_IMAGE_URI-$IMAGE_TAG"
        
-       docker build . --file Dockerfile --no-cache -t $FULL_IMAGE_NAME:latest --target base
-       docker push $FULL_IMAGE_NAME:latest
+       docker build . --file Dockerfile --no-cache -t $FULL_IMAGE_URI:latest --target base
+       docker push $FULL_IMAGE_URI:latest
 
-       docker tag $FULL_IMAGE_NAME:latest $FULL_IMAGE_NAME:$COMMIT_SHA
-       docker push $FULL_IMAGE_NAME:$COMMIT_SHA
+       docker tag $FULL_IMAGE_URI:latest $FULL_IMAGE_URI:$COMMIT_SHA
+       docker push $FULL_IMAGE_URI:$COMMIT_SHA
