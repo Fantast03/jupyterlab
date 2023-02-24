@@ -29,10 +29,10 @@ jobs:
        COMMIT_SHA=$(git rev-parse --short HEAD)
        FULL_IMAGE_NAME="$BASE_IMAGE_URI-$IMAGE_TAG_NAME"
        
-       docker build . --file Dockerfile --no-cache --name $FULL_IMAGE_NAME -t latest --target base
+       docker build . --file Dockerfile --no-cache -t $FULL_IMAGE_NAME:latest --target base
        docker push $FULL_IMAGE_NAME:latest
 
-       docker tag $FULL_IMAGE_NAME $COMMIT_SHA
+       docker tag $FULL_IMAGE_NAME:latest $FULL_IMAGE_NAME:$COMMIT_SHA
        docker push $FULL_IMAGE_NAME:$COMMIT_SHA
   
   machine-learning-build: 
@@ -51,8 +51,8 @@ jobs:
        COMMIT_SHA=$(git rev-parse --short HEAD)
        FULL_IMAGE_NAME="$BASE_IMAGE_URI-$IMAGE_TAG"
        
-       docker build . --file Dockerfile --no-cache --name $FULL_IMAGE_NAME -t latest --target machine-learning
+       docker build . --file Dockerfile --no-cache -t $FULL_IMAGE_NAME:latest --target base
        docker push $FULL_IMAGE_NAME:latest
 
-       docker tag $FULL_IMAGE_NAME $COMMIT_SHA
+       docker tag $FULL_IMAGE_NAME:latest $FULL_IMAGE_NAME:$COMMIT_SHA
        docker push $FULL_IMAGE_NAME:$COMMIT_SHA
