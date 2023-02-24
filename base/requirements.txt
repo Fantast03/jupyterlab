@@ -1,0 +1,8 @@
+jupyterlab>=3.6.1
+jupyter-git>=1.0.22  
+jupyterlab-lsp[all]>=3.10.2 
+jedi-language-server>=0.40.0 
+jupyterlab-horizon-theme>=3.1.1  
+ipympl>=0.9.3 
+jupyterlab-execute-time>=2.3.1 
+

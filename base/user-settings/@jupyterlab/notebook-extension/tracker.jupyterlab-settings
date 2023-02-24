@@ -1,0 +1,25 @@
+{
+"codeCellConfig" : {
+        "autoClosingBrackets": true,
+        "fontFamily": "DejaVu Sans Mono",
+        "fontSize": 16,
+        "lineNumbers": true,
+        "showTrailingSpace": true
+   },
+
+   "markdownCellConfig" : {
+        "autoClosingBrackets": true,
+        "fontFamily": "DejaVu Sans Mono",
+        "fontSize": 16,
+        "showTrailingSpace": true
+   },
+
+   "rawCellConfig": {
+        "autoClosingBrackets": true,
+        "fontFamily": "DejaVu Sans Mono",
+        "fontSize": 16,
+        "showTrailingSpace": true
+   },
+
+   "recordTiming": true
+}

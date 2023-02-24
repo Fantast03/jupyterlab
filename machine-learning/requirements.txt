@@ -1,0 +1,13 @@
+beautifulsoup4
+cloudpickle
+cython
+ipywidgets
+numpy
+matplotlib
+numba
+pandas
+scikit-image
+scikit-learn
+scipy
+seaborn
+sympy
