@@ -13,7 +13,7 @@ env:
 jobs:
   base-build:
     env:
-      FULL_IMAGE_URI: "$IMAGE_REPO_URL/${{ secrets.DOCKER_LOGIN }}/jupyterlab-base"
+      FULL_IMAGE_URI: "${IMAGE_REPO_URL}/${{ secrets.DOCKER_LOGIN }}/jupyterlab-base"
 
     runs-on: ubuntu-latest
 
@@ -37,7 +37,7 @@ jobs:
   machine-learning-build: 
     name: "Build machine learning notebook docker image"
     env:
-      FULL_IMAGE_URI: "$IMAGE_REPO_URL/${{ secrets.DOCKER_LOGIN }}/jupyterlab-machine-learning"
+      FULL_IMAGE_URI: "${IMAGE_REPO_URL}/${{ secrets.DOCKER_LOGIN }}/jupyterlab-machine-learning"
     runs-on: "ubuntu-latest"
     steps:
     - name: "Check out the repo"
@@ -46,7 +46,7 @@ jobs:
     - name: "Login to docker registry"
       run: echo "${{ secrets.DOCKER_PWD }}" | docker login $IMAGE_REPO_URL -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
 
-    - name: "Build and push image into the repo"
+    - name: "Build and push image int o the repo"
       run: |
        COMMIT_SHA=$(git rev-parse --short HEAD)
        
