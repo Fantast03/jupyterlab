@@ -7,5 +7,5 @@ jupyter/docker-stacks small modification for own use
 
 $ VOLUME_NAME=jupyterlab
 $ docker volume create $VOLUME_NAME
-$ docker run -p 8888:8888 -v $VOLUME_NAME:/home/jovyan/ -d --name=jupyterlab fantast03/jupyterlab-machine-learning:latest
+$ docker run -p 8888:8888 -v $VOLUME_NAME:/home/jovyan/work/ -d --name=jupyterlab fantast03/jupyterlab-machine-learning:latest
 ```
