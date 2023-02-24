@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_URI: "${{ IMAGE_REPO_URL  }}/fantast03/jupyterlab"
+  IMAGE_URI: "$IMAGE_REPO_URL/fantast03/jupyterlab"
   IMAGE_REPO_URL: "docker.io"
 
 
@@ -18,22 +18,22 @@ jobs:
 
     steps:
     - name: "Check out the repo"
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3 
 
     - name: "Login to docker registry"
-      run: echo "${{ secrets.DOCKER_PWD }}" | docker login ${{ IMAGE_REPO_URL }} -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
+      run: echo "${{ secrets.DOCKER_PWD }}" | docker login $IMAGE_REPO_URL -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
 
     - name: "Build and push image into the repo"
       run: |
        IMAGE_TAG_NAME=base
        COMMIT_SHA=$(git rev-parse --short HEAD)
-       FILL_IMAGE_NAME="${{ IMAGE_URI }}-${{ IMAGE_TAG }}"
+       FILL_IMAGE_NAME="$IMAGE_URI-$IMAGE_TAG"
        
-       docker build . --file Dockerfile --no-cache -t ${{ FULL_IMAGE_NAME }}:latest --target base
-       docker push ${{ FULL_IMAGE_NAME }}:latest
+       docker build . --file Dockerfile --no-cache -t $FULL_IMAGE_NAME:latest --target base
+       docker push $FULL_IMAGE_NAME:latest
 
-       docker tag ${{ FULL_IMAGE_NAME }}:latest ${{ FULL_IMAGE_NAME }}:${{ COMMIT_SHA }}
-       docker push ${{ FULL_IMAGE_NAME }}:${{ COMMIT_SHA }}
+       docker tag $FULL_IMAGE_NAME:latest $FULL_IMAGE_NAME:$COMMIT_SHA
+       docker push $FULL_IMAGE_NAME:$COMMIT_SHA
   
   machine-learning-build: 
     name: "Build machine learning notebook docker image"
@@ -43,16 +43,16 @@ jobs:
       uses: actions/checkout@v3
 
     - name: "Login to docker registry"
-      run: echo "${{ secrets.DOCKER_PWD }}" | docker login ${{ IMAGE_REPO_URL }} -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
+      run: echo "${{ secrets.DOCKER_PWD }}" | docker login $IMAGE_REPO_URL -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
 
     - name: "Build and push image into the repo"
       run: |
        IMAGE_TAG_NAME=machine-learning
        COMMIT_SHA=$(git rev-parse --short HEAD)
-       FILL_IMAGE_NAME="${{ IMAGE_URI }}-${{ IMAGE_TAG }}"
+       FILL_IMAGE_NAME="$IMAGE_URI-$IMAGE_TAG"
        
-       docker build . --file Dockerfile --no-cache -t ${{ FULL_IMAGE_NAME }}:latest --target base
-       docker push ${{ FULL_IMAGE_NAME }}:latest
+       docker build . --file Dockerfile --no-cache -t $FULL_IMAGE_NAME:latest --target base
+       docker push $FULL_IMAGE_NAME:latest
 
-       docker tag ${{ FULL_IMAGE_NAME }}:latest ${{ FULL_IMAGE_NAME }}:${{ COMMIT_SHA }}
-       docker push ${{ FULL_IMAGE_NAME }}:${{ COMMIT_SHA }}
+       docker tag $FULL_IMAGE_NAME:latest $FULL_IMAGE_NAME:$COMMIT_SHA
+       docker push $FULL_IMAGE_NAME:$COMMIT_SHA
