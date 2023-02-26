@@ -7,8 +7,12 @@ LABEL org.opencontainers.image.licenses="BSD3-Clause"
 
 ARG CTX=base
 
+USER root
+
 # Copy preference settings
-COPY $CTX/user-settings $HOME/.jupyter/lab/user-settings/
+COPY $CTX/user-settings /home/$NB_USER/.jupyter/lab/user-settings/
+
+RUN chown $NB_USER -R /home/$NB_USER/.jupyter/lab/user-settings/
 
 # Copy and install jupyter extensions
 COPY $CTX/requirements.txt .
